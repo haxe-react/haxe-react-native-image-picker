@@ -3,12 +3,13 @@ package react.native.image_picker;
 import haxe.io.Bytes;
 
 @:jsRequire('react-native-image-picker')
-extern class VideoPicker {
-	public static function launchImageLibrary(option:VideoPickerOption, res:VideoPickerResponse->Void):Void;
-	public static function launchCamera(option:VideoPickerOption, res:VideoPickerResponse->Void):Void;
+extern class ImagePicker {
+	public static function showImagePicker(option:ImagePickerOption, res:ImagePickerResponse->Void):Void;
+	public static function launchImageLibrary(option:ImagePickerOption, res:ImagePickerResponse->Void):Void;
+	public static function launchCamera(option:ImagePickerOption, res:ImagePickerResponse->Void):Void;
 }
 
-typedef VideoPickerOption = {
+typedef ImagePickerOption = {
 	?title:String,
 	?cancelButtonTitle:String,
 	?takePhotoButtonTitle:String,
@@ -18,7 +19,7 @@ typedef VideoPickerOption = {
 	?maxWidth:Int,
 	?maxHeight:Int,
 	?quality:Int,
-	?videoQuality:String,
+	?ImageQuality:String,
 	?durationLimit:Int,
 	?noData:Bool,
 	#if ios
@@ -29,7 +30,7 @@ typedef VideoPickerOption = {
 	#end
 }
 
-typedef VideoPickerResponse = {
+typedef ImagePickerResponse = {
 	?didCancel:Bool,
 	?error:Bool,
 	?data:Bytes,
@@ -63,7 +64,7 @@ abstract CameraType(String) {
 @:enum
 abstract MediaType(String) {
 	var MPhoto = 'photo';
-	var MVideo = 'video';
+	var MImage = 'Image';
 	#if ios
 	var MMixed = 'mixed';
 	#end
