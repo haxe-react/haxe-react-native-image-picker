@@ -33,7 +33,7 @@ typedef ImagePickerOption = {
 typedef ImagePickerResponse = {
 	?didCancel:Bool,
 	?error:Bool,
-	?data:Bytes,
+	?data:String, // base64
 	?uri:String,
 	?isVertical:Bool,
 	?width:Int,
