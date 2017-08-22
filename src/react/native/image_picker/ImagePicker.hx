@@ -38,15 +38,17 @@ typedef ImagePickerResponse = {
 	?isVertical:Bool,
 	?width:Int,
 	?height:Int,
+	?fileName:String,
+	?timestamp:String,
 	#if ios
 	?origURL:String,
 	#elseif android
 	?fileSize:Int,
-	?fileName:String,
+	?type:String,
 	?path:String,
 	?latitude:Float,
 	?longitude:Float,
-	?timestamp:String,
+	?originalRotation:Int,
 	#end
 }
 
