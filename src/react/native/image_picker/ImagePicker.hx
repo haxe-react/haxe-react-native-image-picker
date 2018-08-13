@@ -15,46 +15,57 @@ typedef ImagePickerOption = {
 	?takePhotoButtonTitle:String,
 	?chooseFromLibraryButtonTitle:String,
 	?customButtons:Array<CustomButtonsOption>,
+	#if ios ?cameraType:CameraType, #end
 	?mediaType:MediaType,
 	?maxWidth:Int,
 	?maxHeight:Int,
-	?quality:Int,
-	?ImageQuality:String,
-	?durationLimit:Int,
+	?quality:Float,
+	?videoQuality:VideoQuality,
+	?durationLimit:Float,
+	#if android ?rotation:Float, #end
+	#if ios ?allowsEditing:Bool, #end
 	?noData:Bool,
-	#if ios
-	?allowsEditing:Bool,
-	?cameraType:CameraType,
-	#elseif android
-	?rotation:Int,
-	#end
+	?storageOptions:StorageOption,
+	?permissionDenied:{},
 }
 
 typedef ImagePickerResponse = {
 	?didCancel:Bool,
-	?error:Bool,
-	?data:String, // base64
+	?error:String,
+	?customButton:String,
+	?data:String,
 	?uri:String,
+	#if ios ?origURL:String, #end
 	?isVertical:Bool,
 	?width:Int,
 	?height:Int,
-	?fileName:String,
-	?timestamp:String,
-	#if ios
-	?origURL:String,
-	#elseif android
 	?fileSize:Int,
-	?type:String,
-	?path:String,
+	#if android ?type:String, #end
+	?fileName:String,
+	#if android ?path:String, #end
 	?latitude:Float,
 	?longitude:Float,
-	?originalRotation:Int,
-	#end
+	?timestamp:String,
+	#if android ?originalRotation:Int, #end
 }
 
 typedef CustomButtonsOption = {
 	name:String,
 	title:String,
+}
+
+typedef StorageOption = {
+	#if ios ?skipBackup:Bool, #end
+	#if ios ?path:String, #end
+	?cameraRoll:Bool,
+	#if ios ?waitUntilSaved:Bool, #end
+}
+
+typedef PermissionDeniedOption = {
+	?title:String,
+	?text:String,
+	?reTryTitle:String,
+	?okTitle:String,
 }
 
 @:enum
@@ -64,10 +75,17 @@ abstract CameraType(String) {
 }
 
 @:enum
+abstract VideoQuality(String) {
+	var Low = 'low';
+	#if ios var Medium = 'medium'; #end
+	var High = 'high';
+}
+
+
+
+@:enum
 abstract MediaType(String) {
-	var MPhoto = 'photo';
-	var MImage = 'Image';
-	#if ios
-	var MMixed = 'mixed';
-	#end
+	var Photo = 'photo';
+	var Video = 'video';
+	#if ios var Mixed = 'mixed'; #end
 }
